@@ -80,6 +80,12 @@
             container.innerHTML = `
                 <div class="meta">${post.sender} — ${new Date(post.timestamp).toLocaleString()}</div>
                 <audio controls src="${API_BASE}${post.file}"></audio>
+                <div class="actions">
+                    <button class="btn like-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.016 2.378l.492.748c1.688 2.585 3.12 4.793 4.298 6.551 2.215 3.32 3.197 4.818 3.197 6.136 0 3.238-2.607 5.867-5.827 5.867-1.895 0-3.666-.884-4.88-2.316a.48.48 0 0 0-.742 0c-1.214 1.432-2.985 2.316-4.88 2.316-3.22 0-5.827-2.629-5.827-5.867 0-1.318.982-2.816 3.197-6.136 1.178-1.758 2.61-3.966 4.298-6.551l.492-.748c.55-.838.825-1.258 1.13-1.428.307-.17.653-.17.96 0 .307.17.582.59.13 1.428z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Like (${post.likeCount})</span>
+                    </button>
+                </div>
                 <div class="stat">Played ${post.playCount} times</div>
             `;
             // Add a play event listener to increment the play count
@@ -93,6 +99,18 @@
                         }
                     })
                     .catch(err => console.error("Failed to update play count", err));
+            });
+            // Add a click event listener for the new like button
+            const likeBtn = container.querySelector('.like-btn');
+            likeBtn.addEventListener('click', () => {
+                fetch(`${API_BASE}/api/audio/${post.id}/like`, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            likeBtn.querySelector('span').textContent = `Like (${data.newLikeCount})`;
+                        }
+                    })
+                    .catch(err => console.error("Failed to update like count", err));
             });
             return container;
         }
@@ -127,7 +145,7 @@
                                 <div class="mini">🎧</div>
                                 <div>
                                     <div class="name">${post.sender}</div>
-                                    <div class="muted" style="font-size:12px;">Played ${post.playCount} times</div>
+                                    <div class="muted" style="font-size:12px;">Likes: ${post.likeCount}</div>
                                 </div>
                             </div>
                             <a href="${API_BASE}${post.file}" download class="btn ghost">
