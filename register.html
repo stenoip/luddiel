@@ -25,6 +25,10 @@
         <p>Create an account to start sharing your audio.</p>
         <form id="register-form">
             <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+            <div class="input-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required />
             </div>
@@ -46,6 +50,7 @@
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
             
             statusEl.textContent = 'Registering...';
             statusEl.className = 'status';
@@ -54,12 +59,11 @@
                 const response = await fetch(`${API_BASE}/api/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password, name })
                 });
 
                 const data = await response.json();
                 if (data.success) {
-                    // Redirect to the verification pending page
                     window.location.href = `verify_pending.html?email=${encodeURIComponent(email)}`;
                 } else {
                     statusEl.textContent = data.message;
