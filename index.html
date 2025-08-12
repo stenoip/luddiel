@@ -5,74 +5,64 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Lûddiel</title>
     <style>
-        :root{--bg:#0e0f12;--elev-1:#14161b;--elev-2:#1a1d23;--card:#161921;--border:#232733;--text:#e6e8ee;--muted:#aab1c3;--brand:#7b5cff;--brand-2:#5fe1d6;--accent:#ff7ab6;--success:#52d67a;--warning:#ffc857;--danger:#ff6b6b;--shadow:0 8px 24px rgba(0,0,0,.25), 0 2px 6px rgba(0,0,0,.2);--radius:16px;--radius-sm:12px;--radius-xs:10px;--gap:18px;--gap-sm:12px;--gap-lg:24px;}*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:radial-gradient(1200px 800px at -10% -10%,rgba(123,92,255,.18),transparent 40%),radial-gradient(1000px 700px at 110% -20%,rgba(95,225,214,.15),transparent 40%),var(--bg);color:var(--text);font: 15px/1.5 ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";letter-spacing:.2px;}a{color:inherit;text-decoration:none}button{font:inherit}.topbar{position:sticky; top:0; z-index:50;backdrop-filter: blur(10px);background: linear-gradient(to bottom, rgba(14,15,18,.85), rgba(14,15,18,.6));border-bottom:1px solid var(--border);}.topbar-inner{display:flex; align-items:center; gap:12px;max-width:1200px; margin:0 auto; padding:14px 18px;}.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px;background: linear-gradient(135deg, var(--brand), var(--brand-2));-webkit-background-clip:text; background-clip:text; color:transparent;font-size:22px;}.brand-badge{width:30px; height:30px; border-radius:10px;background: conic-gradient(from 200deg, var(--brand), var(--brand-2), var(--accent));box-shadow:0 0 0 2px rgba(255,255,255,.06), 0 8px 18px rgba(0,0,0,.35) inset;display:grid; place-items:center; color:white; font-size:14px; font-weight:900;}.search{flex:1; display:flex; align-items:center; gap:8px;background: var(--elev-2); border:1px solid var(--border);padding:8px 12px; border-radius:999px;}.search input{flex:1; background:transparent; border:none; outline:none; color:var(--text);}.pill{display:inline-flex; align-items:center; gap:8px;padding:9px 14px; border-radius:999px; border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.0));color:var(--text); cursor:pointer;transition: transform .05s ease, background .2s ease, border-color .2s ease;}.pill:hover{transform: translateY(-1px); border-color:#2e3444}.pill.primary{background: linear-gradient(135deg, rgba(123,92,255,.25), rgba(95,225,214,.22));border-color: transparent;}.file-input{display:none}.avatar{width:34px; height:34px; border-radius:50%;background: linear-gradient(135deg, #2b2f3b, #232735);border:1px solid var(--border);display:grid; place-items:center; font-weight:700; color:#c9cee1; font-size:12px;}.container{max-width:1200px; margin:20px auto; padding:0 18px;display:grid; grid-template-columns:260px minmax(0,1fr) 320px; gap:var(--gap);}.card{background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));border:1px solid var(--border); border-radius:var(--radius);box-shadow: var(--shadow);}.section{padding:16px}.sidebar .item{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; color:var(--text);border:1px solid transparent;}.sidebar .item:hover{background:var(--elev-2); border-color:var(--border)}.sidebar h3{color:#d6daea; font-size:14px; font-weight:800; letter-spacing:.4px;margin:6px 12px 8px;text-transform:uppercase;}.muted{color:var(--muted)}.tag{display:inline-flex; align-items:center; gap:8px;padding:6px 10px; border-radius:999px; border:1px solid var(--border);color:#d8dcef; background: #151823;font-size:12px;}.tag .dot{width:8px; height:8px; border-radius:50%;background: linear-gradient(135deg, var(--brand), var(--brand-2));box-shadow:0 0 0 2px rgba(123,92,255,.15);}.composer{padding:16px}.composer .row{display:flex; align-items:center; gap:12px; margin-bottom:12px;}.composer textarea{width:100%; min-height:70px; resize:vertical;background:#141823; color:var(--text); border:1px solid var(--border);border-radius:12px; padding:12px;}.chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--border);color:#d8dcef; background: #151823;font-size:12px;}.chip.primary{background:rgba(123,92,255,.2); border-color:var(--brand); color:#d9d3f1;}.audio-post{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:16px;}.audio-post .meta{font-size:14px; color:var(--muted); margin-bottom:10px;}.audio-post audio{width:100%;}.audio-post .actions{display:flex; justify-content:space-between; align-items:center; margin-top:12px;}.audio-post .actions .btn{padding:8px 14px;}.audio-post .stat{font-size:12px; color:var(--muted); margin-top:10px;}.comment-list{border-top:1px solid var(--border); margin-top:12px; padding-top:12px;}.comment-item{display:flex; gap:12px; margin-bottom:12px;}.comment-avatar{width:30px; height:30px; border-radius:50%;background: linear-gradient(135deg, #2b2f3b, #232735);border:1px solid var(--border);display:grid; place-items:center; font-weight:700; color:#c9cee1; font-size:12px;}.comment-body{flex:1;}.comment-author{font-weight:600;}.comment-text{font-size:14px; margin-top:4px;}.comment-form{display:flex; gap:8px; margin-top:12px;}.comment-form textarea{flex:1; background:var(--elev-1); border:1px solid var(--border); border-radius:12px; padding:8px; resize:none; color:var(--text);}.comment-form button{background:var(--brand); color:white; border:none; padding:8px 16px; border-radius:999px; cursor:pointer;}.creator{display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-radius:12px; background:var(--elev-1); margin-bottom:10px;}.creator .left{display:flex; align-items:center; gap:12px;}.creator .mini{width:36px; height:36px; border-radius:50%;background: linear-gradient(135deg, #2b2f3b, #232735);border:1px solid var(--border);display:grid; place-items:center; font-weight:700; color:#c9cee1; font-size:14px;}.creator .name{font-weight:600;}.creator .muted{font-size:12px;}.creator .btn{padding:6px 12px;}.status{text-align:center; padding:10px; font-weight:600; color:var(--muted);}.status.error{color:var(--danger);}.sidebar-right .card{padding:16px;}.sidebar-right h3{font-size:16px; font-weight:700; margin-bottom:16px;}
+        :root{--bg:#0e0f12;--elev-1:#14161b;--elev-2:#1a1d23;--card:#161921;--border:#232733;--text:#e6e8ee;--muted:#aab1c3;--brand:#7b5cff;--brand-2:#5fe1d6;--accent:#ff7ab6;--success:#52d67a;--warning:#ffc857;--danger:#ff6b6b;--shadow:0 8px 24px rgba(0,0,0,.25), 0 2px 6px rgba(0,0,0,.2);--radius:16px;--radius-sm:12px;--radius-xs:10px;--gap:18px;--gap-sm:12px;--gap-lg:24px;}*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:radial-gradient(1200px 800px at -10% -10%,rgba(123,92,255,.18),transparent 40%),radial-gradient(1000px 700px at 110% -20%,rgba(95,225,214,.15),transparent 40%),var(--bg);color:var(--text);font: 15px/1.5 ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";letter-spacing:.2px;}a{color:inherit;text-decoration:none}button{font:inherit}.topbar{position:sticky; top:0; z-index:50;backdrop-filter: blur(10px);background: linear-gradient(to bottom, rgba(14,15,18,.85), rgba(14,15,18,.6));border-bottom:1px solid var(--border);}.topbar-inner{display:flex; align-items:center; gap:12px;max-width:1200px; margin:0 auto; padding:14px 18px;}.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px;background: linear-gradient(135deg, var(--brand), var(--brand-2));-webkit-background-clip:text; background-clip:text; color:transparent;font-size:22px;}.brand-badge{width:30px; height:30px; border-radius:10px;background: conic-gradient(from 200deg, var(--brand), var(--brand-2), var(--accent));box-shadow:0 0 0 2px rgba(255,255,255,.06), 0 8px 18px rgba(0,0,0,.35) inset;display:grid; place-items:center; color:white; font-size:14px; font-weight:900;}.search{flex:1; display:flex; align-items:center; gap:8px;background: var(--elev-2); border:1px solid var(--border);padding:8px 12px; border-radius:999px;}.search input{flex:1; background:transparent; border:none; outline:none; color:var(--text);}.pill{display:inline-flex; align-items:center; gap:8px;padding:9px 14px; border-radius:999px; border:1px solid var(--border);background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.0));color:var(--text); cursor:pointer;transition: transform .05s ease, background .2s ease, border-color .2s ease;}.pill:hover{transform: translateY(-1px); border-color:#2e3444}.pill.primary{background: linear-gradient(135deg, rgba(123,92,255,.25), rgba(95,225,214,.22));border-color: transparent;}.file-input{display:none}.avatar{width:34px; height:34px; border-radius:50%;background: linear-gradient(135deg, #2b2f3b, #232735);border:1px solid var(--border);display:grid; place-items:center; font-weight:700; color:#c9cee1; font-size:12px;}.container{max-width:1200px; margin:20px auto; padding:0 18px;display:grid; grid-template-columns:260px minmax(0,1fr) 320px; gap:var(--gap);}.card{background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));border:1px solid var(--border); border-radius:var(--radius);box-shadow: var(--shadow);}.section{padding:16px}.sidebar .item{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; color:var(--text);border:1px solid transparent;}.sidebar .item:hover{background:var(--elev-2); border-color:var(--border)}.sidebar h3{color:#d6daea; font-size:14px; font-weight:800; letter-spacing:.4px;margin:6px 12px 8px;text-transform:uppercase;}.muted{color:var(--muted)}.tag{display:inline-flex; align-items:center; gap:8px;padding:6px 10px; border-radius:999px; border:1px solid var(--border);color:#d8dcef; background: #151823;font-size:12px;}.tag .dot{width:8px; height:8px; border-radius:50%;background: linear-gradient(135deg, var(--brand), var(--brand-2));box-shadow:0 0 0 2px rgba(123,92,255,.15);}.composer{padding:16px}.composer .row{display:flex; align-items:center; gap:12px; margin-bottom:12px;}.composer textarea{width:100%; min-height:70px; resize:vertical;background:#141823; color:var(--text); border:1px solid var(--border);border-radius:12px; padding:12px;}.chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px dashed #2a3141; background:#161b26; color:#cdd3e6;}.post{padding:16px; display:flex; flex-direction:column; gap:12px}.post + .post{border-top:1px solid var(--border)}.post-head{display:flex; align-items:center; gap:12px}.post-head .who{display:flex; flex-direction:column}.post-head .name{font-weight:800}.post-head .meta{font-size:12px; color:var(--muted)}.post-audio{background: linear-gradient(180deg, #141824, #121522);border:1px solid var(--border); border-radius:14px; padding:12px;}.post-audio .title{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px;}.wave{height:44px; border-radius:10px; overflow:hidden; border:1px solid #263046;background:repeating-linear-gradient(90deg, rgba(95,225,214,.15) 0 2px, transparent 2px 6px),linear-gradient(135deg, rgba(123,92,255,.25), rgba(95,225,214,.18));}audio{width:100%; margin-top:10px; filter: saturate(1.1) hue-rotate(-5deg)}.actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap}.btn{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px;border:1px solid var(--border); background:#141823; color:#dbe0f3; cursor:pointer;}.btn:hover{border-color:#2f3a54}.btn.ghost{background:transparent}.stat{font-size:12px; color:var(--muted)}.list{display:flex; flex-direction:column; gap:10px}.creator{display:flex; align-items:center; justify-content:space-between; gap:10px;padding:10px; border:1px solid var(--border); border-radius:12px; background:#151a25;}.creator .left{display:flex; align-items:center; gap:10px}.mini{width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,#2b2f3b,#232735); border:1px solid var(--border); display:grid; place-items:center; font-size:11px; color:#c9cee1; font-weight:700}.status{ text-align:center; color:var(--muted); margin:10px 0 16px; }.error{ color: var(--danger); }.audio-post{background: linear-gradient(180deg, #141824, #121522);border:1px solid var(--border);border-radius:14px;padding:14px;margin:14px 0;box-shadow: var(--shadow);}.audio-post .meta{ font-size:12px; color:var(--muted); margin-bottom:8px; }footer{max-width:1200px; margin:30px auto; padding:0 18px 40px; color:var(--muted); font-size:13px}.auth-links{display:flex; gap:10px;}.comments-section{ margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }.comment-list{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }.comment-item{ display:flex; align-items:flex-start; gap:10px; }.comment-item .comment-avatar{ width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg, #2b2f3b, #232735); border:1px solid var(--border); display:grid; place-items:center; font-size:11px; color:#c9cee1; font-weight:700; }.comment-item .comment-body{ flex:1; }.comment-item .comment-author{ font-weight:700; font-size:13px; }.comment-item .comment-text{ font-size:14px; }.comment-form{ display:flex; gap:10px; margin-top:12px; }.comment-form textarea{ flex:1; background:#141823; color:var(--text); border:1px solid var(--border); border-radius:12px; padding:8px 12px; resize:vertical; min-height:40px; }.comment-form button{ padding:8px 14px; border:none; background:var(--brand); color:white; font-weight:bold; border-radius:12px; cursor:pointer; }.avatar{width:34px; height:34px; border-radius:50%;background: linear-gradient(135deg, #2b2f3b, #232735);border:1px solid var(--border);display:grid; place-items:center; font-weight:700; color:#c9cee1; font-size:12px;}@media (max-width: 1100px){.container{grid-template-columns:240px minmax(0,1fr)}.right{display:none}}@media (max-width: 780px){.container{grid-template-columns:1fr}.left{display:none}.topbar-inner{gap:10px}.search{display:none}}    
     </style>
 </head>
 <body>
-    <div class="topbar">
+    <header class="topbar" role="banner">
         <div class="topbar-inner">
-            <a href="index.html" class="brand">
-                <div class="brand-badge">L</div>
-                Lûddiel
-            </a>
-            <div class="search">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="m21 21-4.35-4.35m-5.65 2.35a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" stroke="#aab1c3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <input type="text" placeholder="Search audio, creators, tags..." />
+            <div class="brand" aria-label="Lûddiel home">
+                <span class="brand-badge">♪</span> Lûddiel
             </div>
-            <div id="auth-controls">
+            <form class="search" role="search" aria-label="Search sounds">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.2-4.2M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="#aab1c3" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <input type="search" placeholder="Search audio, creators, tags…" aria-label="Search input" />
+            </form>
+            <div id="auth-controls" class="auth-links">
                 </div>
         </div>
-    </div>
+    </header>
 
-    <div class="container">
-        <div class="sidebar">
-            <div class="card">
-                <div class="section">
-                    <h3>Menu</h3>
-                    <a href="index.html" class="item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10h5V4H4v6zm7 10h5V4h-5v16zm7-16v16h5V4h-5z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Home
-                    </a>
-                    <a href="#" class="item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 9v6m-3-3h6" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Discover
-                    </a>
-                    <a href="#" class="item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM5 17h14" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Following
-                    </a>
-                    <a href="#" class="item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19.5v-15a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Playlists
-                    </a>
-                    <a href="upload.html" class="item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Upload
-                    </a>
+    <main class="container" role="main">
+        <aside class="left sidebar">
+            <div class="card section">
+                <h3>Menu</h3>
+                <a class="item" href="index.html"><span>🏠</span> <span>Home</span></a>
+                <a class="item" href="#"><span>🔎</span> <span>Discover</span></a>
+                <a class="item" href="following.html"><span>🎧</span> <span>Following</span></a>
+                <a class="item" href="playlists.html"><span>📻</span> <span>Playlists</span></a>
+                <a class="item" href="upload.html"><span>⬆️</span> <span>Upload</span></a>
+            </div>
+        </aside>
+
+        <section aria-label="Feed" class="feed">
+            <div id="status" class="status">Loading posts...</div>
+
+            <h2>Latest Audio</h2>
+            <div id="latest-feed"></div>
+
+        </section>
+
+        <aside class="right sidebar">
+            <div class="card section">
+                <h3>Recommended for you</h3>
+                <div id="recommended-list" class="list">
+                    <p class="muted">No recommendations yet.</p>
                 </div>
             </div>
-        </div>
-
-        <div class="main-content">
-            <div id="status">Loading posts...</div>
-            
-            <h3>Latest Audio</h3>
-            <div id="latest-feed">
-                </div>
-        </div>
-
-        <div class="sidebar-right">
-            <div class="card">
-                <div class="section">
-                    <h3>Recommended for You</h3>
-                    <div id="recommended-list">
-                        </div>
+            <div class="card section" style="margin-top:var(--gap)">
+                <h3>Top creators</h3>
+                <div class="list">
+                    <p class="muted">No creators yet. Be the first to share!</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div>Lûddiel — share what you hear.</div>
+        <div class="muted" style="margin-top:6px">Waiting for your first post…</div>
+    </footer>
 
     <script>
         const API_BASE = 'https://studious-space-engine-694w59x5p7r9354xv-3000.app.github.dev';
@@ -82,30 +72,18 @@
         const authControls = document.getElementById('auth-controls');
         const authToken = localStorage.getItem('authToken');
         const userEmail = localStorage.getItem('userEmail');
-        const userName = localStorage.getItem('userName');
 
         function createAudioPost(post) {
             const container = document.createElement('div');
             container.className = 'audio-post';
-            
-            const isMyPost = userName === post.userName;
-            const subscribeButtonHtml = !isMyPost && authToken && !post.isSubscribed
-                ? `<button class="btn ghost subscribe-btn" data-email="${post.userEmail}">+ Subscribe</button>`
-                : isMyPost
-                    ? `<span class="btn ghost">Your Post</span>`
-                    : post.isSubscribed
-                        ? `<span class="btn ghost">Subscribed</span>`
-                        : '';
-
             container.innerHTML = `
-                <div class="meta">${post.userName} — ${new Date(post.timestamp).toLocaleString()}</div>
+                <div class="meta">${post.sender} — ${new Date(post.timestamp).toLocaleString()}</div>
                 <audio controls src="${API_BASE}${post.file}"></audio>
                 <div class="actions">
                     <button class="btn like-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.016 2.378l.492.748c1.688 2.585 3.12 4.793 4.298 6.551 2.215 3.32 3.197 4.818 3.197 6.136 0 3.238-2.607 5.867-5.827 5.867-1.895 0-3.666-.884-4.88-2.316a.48.48 0 0 0-.742 0c-1.214 1.432-2.985 2.316-4.88 2.316-3.22 0-5.827-2.629-5.827-5.867 0-1.318.982-2.816 3.197-6.136 1.178-1.758 2.61-3.966 4.298-6.551l.492-.748c.55-.838.825-1.258 1.13-1.428.307-.17.653-.17.96 0 .307.17.582.59.13 1.428z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Like (${post.likeCount})</span>
                     </button>
-                    ${subscribeButtonHtml}
                 </div>
                 <div class="stat">Played ${post.playCount} times</div>
                 
@@ -122,9 +100,9 @@
                     const commentItem = document.createElement('div');
                     commentItem.className = 'comment-item';
                     commentItem.innerHTML = `
-                        <div class="comment-avatar">${comment.userName.charAt(0).toUpperCase()}</div>
+                        <div class="comment-avatar">${comment.userEmail.charAt(0).toUpperCase()}</div>
                         <div class="comment-body">
-                            <div class="comment-author">${comment.userName}</div>
+                            <div class="comment-author">${comment.userEmail}</div>
                             <div class="comment-text">${comment.commentText}</div>
                         </div>
                     `;
@@ -171,31 +149,6 @@
                 });
             }
 
-            const subscribeBtn = container.querySelector('.subscribe-btn');
-            if(subscribeBtn) {
-                subscribeBtn.addEventListener('click', async () => {
-                    subscribeBtn.textContent = 'Subscribing...';
-                    try {
-                        const res = await fetch(`${API_BASE}/api/subscribe/${post.userEmail}`, {
-                            method: 'POST',
-                            headers: { 'Authorization': authToken }
-                        });
-                        const data = await res.json();
-                        if (data.success) {
-                            subscribeBtn.textContent = 'Subscribed';
-                            subscribeBtn.disabled = true;
-                            subscribeBtn.classList.remove('ghost');
-                        } else {
-                            subscribeBtn.textContent = data.message;
-                            console.error(data.message);
-                        }
-                    } catch (err) {
-                        console.error('Failed to subscribe', err);
-                        subscribeBtn.textContent = 'Error';
-                    }
-                });
-            }
-
             // NEW: Add comment form
             if (authToken) {
                 const commentForm = document.createElement('form');
@@ -226,9 +179,9 @@
                             const newCommentItem = document.createElement('div');
                             newCommentItem.className = 'comment-item';
                             newCommentItem.innerHTML = `
-                                <div class="comment-avatar">${userName.charAt(0).toUpperCase()}</div>
+                                <div class="comment-avatar">${userEmail.charAt(0).toUpperCase()}</div>
                                 <div class="comment-body">
-                                    <div class="comment-author">${userName}</div>
+                                    <div class="comment-author">${userEmail}</div>
                                     <div class="comment-text">${commentText}</div>
                                 </div>
                             `;
@@ -248,10 +201,7 @@
         async function loadFeeds() {
             setStatus('Loading posts...');
             try {
-                // Only set the Authorization header if an authToken exists
                 const headers = authToken ? { 'Authorization': authToken } : {};
-
-                // Fetch latest posts (public, so it should work with or without a token)
                 const latestRes = await fetch(`${API_BASE}/api/latest`, { headers });
                 if (!latestRes.ok) throw new Error(`Latest fetch failed: ${latestRes.status}`);
                 const latestPosts = await latestRes.json();
@@ -262,40 +212,31 @@
                     latestPosts.forEach(post => latestFeed.appendChild(createAudioPost(post)));
                 }
 
-                // Fetch recommended posts (this might be a feature for logged-in users only)
-                // Check if there's an authToken before attempting this fetch.
-                // If there's no token, we can't get recommendations, so we'll display a message.
-                if (authToken) {
-                    const recommendedRes = await fetch(`${API_BASE}/api/recommended`, { headers });
-                    if (!recommendedRes.ok) throw new Error(`Recommended fetch failed: ${recommendedRes.status}`);
-                    const recommendedPosts = await recommendedRes.json();
-                    recommendedList.innerHTML = '';
-                    if (recommendedPosts.length === 0) {
-                        recommendedList.innerHTML = '<p class="muted">No recommendations yet.</p>';
-                    } else {
-                        recommendedPosts.forEach(post => {
-                            const creatorEl = document.createElement('div');
-                            creatorEl.className = 'creator';
-                            creatorEl.innerHTML = `
-                                <div class="left">
-                                    <div class="mini">${post.userName.charAt(0).toUpperCase()}</div>
-                                    <div>
-                                        <div class="name">${post.userName}</div>
-                                        <div class="muted" style="font-size:12px;">Likes: ${post.likeCount}</div>
-                                    </div>
-                                </div>
-                                <a href="${API_BASE}${post.file}" download class="btn ghost">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2m-8-9v9m-4-4l4 4 4-4" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round"/></svg>
-                                </a>
-                            `;
-                            recommendedList.appendChild(creatorEl);
-                        });
-                    }
+                const recommendedRes = await fetch(`${API_BASE}/api/recommended`, { headers });
+                if (!recommendedRes.ok) throw new Error(`Recommended fetch failed: ${recommendedRes.status}`);
+                const recommendedPosts = await recommendedRes.json();
+                recommendedList.innerHTML = '';
+                if (recommendedPosts.length === 0) {
+                    recommendedList.innerHTML = '<p class="muted">No recommendations yet.</p>';
                 } else {
-                    // Handle the case where no user is logged in
-                    recommendedList.innerHTML = '<p class="muted" style="text-align:center;">Log in to see your recommendations.</p>';
+                    recommendedPosts.forEach(post => {
+                        const creatorEl = document.createElement('div');
+                        creatorEl.className = 'creator';
+                        creatorEl.innerHTML = `
+                            <div class="left">
+                                <div class="mini">🎧</div>
+                                <div>
+                                    <div class="name">${post.sender}</div>
+                                    <div class="muted" style="font-size:12px;">Likes: ${post.likeCount}</div>
+                                </div>
+                            </div>
+                            <a href="${API_BASE}${post.file}" download class="btn ghost">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2m-8-9v9m-4-4l4 4 4-4" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round"/></svg>
+                            </a>
+                        `;
+                        recommendedList.appendChild(creatorEl);
+                    });
                 }
-                
                 setStatus('');
             } catch (err) {
                 console.error(err);
@@ -310,14 +251,14 @@
 
         function setupAuthControls() {
             if (authToken) {
+                const userEmail = localStorage.getItem('userEmail');
                 authControls.innerHTML = `
-                    <div class="avatar" title="${userEmail}">${userName.charAt(0).toUpperCase()}</div>
+                    <div class="avatar" title="${userEmail}">${userEmail.charAt(0).toUpperCase()}</div>
                     <button class="pill" id="logout-btn">Log Out</button>
                 `;
                 document.getElementById('logout-btn').addEventListener('click', () => {
                     localStorage.removeItem('authToken');
                     localStorage.removeItem('userEmail');
-                    localStorage.removeItem('userName');
                     window.location.reload();
                 });
             } else {
