@@ -66,246 +66,250 @@
         <div class="muted" style="margin-top:6px">Waiting for your first post…</div>
     </footer>
 
-    <script>
-        const API_BASE = 'https://studious-space-engine-694w59x5p7r9354xv-3000.app.github.dev';
-        const profileHeader = document.getElementById('profile-header');
-        const postList = document.getElementById('post-list');
-        const authControls = document.getElementById('auth-controls');
-        const authToken = localStorage.getItem('authToken');
-        const userEmail = localStorage.getItem('userEmail');
-        const userName = localStorage.getItem('userName');
-        const urlParams = new URLSearchParams(window.location.search);
-        const profileEmail = urlParams.get('email');
 
-        function createAudioPost(post) {
-            const container = document.createElement('div');
-            container.className = 'audio-post';
-            
-            container.innerHTML = `
-                <div class="meta">
-                    <a href="profile.html?email=${post.userEmail}" style="font-weight: bold;">${post.sender}</a>
-                    — ${new Date(post.timestamp).toLocaleString()}
-                </div>
-                <audio controls src="${API_BASE}${post.file}"></audio>
-                <div class="actions">
-                    <button class="btn like-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.016 2.378l.492.748c1.688 2.585 3.12 4.793 4.298 6.551 2.215 3.32 3.197 4.818 3.197 6.136 0 3.238-2.607 5.867-5.827 5.867-1.895 0-3.666-.884-4.88-2.316a.48.48 0 0 0-.742 0c-1.214 1.432-2.985 2.316-4.88 2.316-3.22 0-5.827-2.629-5.827-5.867 0-1.318.982-2.816 3.197-6.136 1.178-1.758 2.61-3.966 4.298-6.551l.492-.748c.55-.838.825-1.258 1.13-1.428.307-.17.653-.17.96 0 .307.17.582.59.13 1.428z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <span>Like (${post.likeCount})</span>
-                    </button>
-                </div>
-                <div class="stat">Played ${post.playCount} times</div>
-                
-                <div class="comments-section">
-                    <h4>Comments</h4>
-                    <div class="comment-list"></div>
-                </div>
-            `;
-            
-            const commentList = container.querySelector('.comment-list');
-            if (post.comments && post.comments.length > 0) {
-                post.comments.forEach(comment => {
-                    const commentItem = document.createElement('div');
-                    commentItem.className = 'comment-item';
-                    commentItem.innerHTML = `
-                        <div class="comment-avatar">${comment.userName.charAt(0).toUpperCase()}</div>
-                        <div class="comment-body">
-                            <div class="comment-author">${comment.userName}</div>
-                            <div class="comment-text">${comment.commentText}</div>
-                        </div>
-                    `;
-                    commentList.appendChild(commentItem);
-                });
-            } else {
-                commentList.innerHTML = '<p class="muted">No comments yet.</p>';
-            }
+<script>
+    const API_BASE = 'https://studious-space-engine-694w59x5p7r9354xv-3000.app.github.dev';
+    const profileHeader = document.getElementById('profile-header');
+    const postList = document.getElementById('post-list');
+    const authControls = document.getElementById('auth-controls');
+    const authToken = localStorage.getItem('authToken');
+    const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('userName');
+    const urlParams = new URLSearchParams(window.location.search);
+    const profileEmail = urlParams.get('email');
 
-            const audioEl = container.querySelector('audio');
-            audioEl.addEventListener('play', () => {
-                fetch(`${API_BASE}/api/audio/${post.id}/play`, { 
+    function createAudioPost(post) {
+        const container = document.createElement('div');
+        container.className = 'audio-post';
+        
+        container.innerHTML = `
+            <div class="meta">
+                <a href="profile.html?email=${post.userEmail}" style="font-weight: bold;">${post.sender}</a>
+                — ${new Date(post.timestamp).toLocaleString()}
+            </div>
+            <h3 style="margin:0; font-size:1.1em;">${post.title}</h3>
+            <audio controls src="${API_BASE}${post.file}"></audio>
+            <div class="actions">
+                <button class="btn like-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.016 2.378l.492.748c1.688 2.585 3.12 4.793 4.298 6.551 2.215 3.32 3.197 4.818 3.197 6.136 0 3.238-2.607 5.867-5.827 5.867-1.895 0-3.666-.884-4.88-2.316a.48.48 0 0 0-.742 0c-1.214 1.432-2.985 2.316-4.88 2.316-3.22 0-5.827-2.629-5.827-5.867 0-1.318.982-2.816 3.197-6.136 1.178-1.758 2.61-3.966 4.298-6.551l.492-.748c.55-.838.825-1.258 1.13-1.428.307-.17.653-.17.96 0 .307.17.582.59.13 1.428z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Like (${post.likeCount})</span>
+                </button>
+            </div>
+            <div class="stat">Played ${post.playCount} times</div>
+            
+            <div class="comments-section">
+                <h4>Comments</h4>
+                <div class="comment-list"></div>
+            </div>
+        `;
+        
+        const commentList = container.querySelector('.comment-list');
+        if (post.comments && post.comments.length > 0) {
+            post.comments.forEach(comment => {
+                const commentItem = document.createElement('div');
+                commentItem.className = 'comment-item';
+                commentItem.innerHTML = `
+                    <div class="comment-avatar">${comment.userName.charAt(0).toUpperCase()}</div>
+                    <div class="comment-body">
+                        <div class="comment-author">${comment.userName}</div>
+                        <div class="comment-text">${comment.commentText}</div>
+                    </div>
+                `;
+                commentList.appendChild(commentItem);
+            });
+        } else {
+            commentList.innerHTML = '<p class="muted">No comments yet.</p>';
+        }
+
+        const audioEl = container.querySelector('audio');
+        audioEl.addEventListener('play', () => {
+            fetch(`${API_BASE}/api/audio/${post.id}/play`, { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    container.querySelector('.stat').textContent = `Played ${data.newPlayCount} times`;
+                }
+            })
+            .catch(err => console.error("Failed to update play count", err));
+        });
+
+        const likeBtn = container.querySelector('.like-btn');
+        if (!authToken) {
+            likeBtn.style.display = 'none';
+        } else {
+            likeBtn.addEventListener('click', () => {
+                fetch(`${API_BASE}/api/audio/${post.id}/like`, { 
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userEmail })
+                    headers: { 'Authorization': authToken }
                 })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        container.querySelector('.stat').textContent = `Played ${data.newPlayCount} times`;
+                        likeBtn.querySelector('span').textContent = `Like (${data.newLikeCount})`;
+                    } else {
+                        console.error("Failed to like post", data.message);
                     }
                 })
-                .catch(err => console.error("Failed to update play count", err));
+                .catch(err => console.error("Failed to update like count", err));
             });
+        }
 
-            const likeBtn = container.querySelector('.like-btn');
-            if (!authToken) {
-                likeBtn.style.display = 'none';
-            } else {
-                likeBtn.addEventListener('click', () => {
-                    fetch(`${API_BASE}/api/audio/${post.id}/like`, { 
+        if (authToken) {
+            const commentForm = document.createElement('form');
+            commentForm.className = 'comment-form';
+            commentForm.innerHTML = `
+                <textarea placeholder="Write a comment..." required></textarea>
+                <button type="submit">Post</button>
+            `;
+            container.querySelector('.comments-section').appendChild(commentForm);
+
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const commentText = commentForm.querySelector('textarea').value;
+                if (!commentText.trim()) return;
+                
+                try {
+                    const res = await fetch(`${API_BASE}/api/audio/${post.id}/comment`, {
                         method: 'POST',
-                        headers: { 'Authorization': authToken }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            likeBtn.querySelector('span').textContent = `Like (${data.newLikeCount})`;
-                        } else {
-                            console.error("Failed to like post", data.message);
-                        }
-                    })
-                    .catch(err => console.error("Failed to update like count", err));
-                });
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': authToken
+                        },
+                        body: JSON.stringify({ commentText })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        commentForm.querySelector('textarea').value = '';
+                        const newCommentItem = document.createElement('div');
+                        newCommentItem.className = 'comment-item';
+                        newCommentItem.innerHTML = `
+                            <div class="comment-avatar">${userName.charAt(0).toUpperCase()}</div>
+                            <div class="comment-body">
+                                <div class="comment-author">${userName}</div>
+                                <div class="comment-text">${commentText}</div>
+                            </div>
+                        `;
+                        const noCommentsParagraph = commentList.querySelector('p.muted');
+                        if (noCommentsParagraph) noCommentsParagraph.remove();
+                        commentList.appendChild(newCommentItem);
+                    }
+                } catch (err) {
+                    console.error('Failed to post comment', err);
+                }
+            });
+        }
+
+        return container;
+    }
+
+    async function loadProfile() {
+        if (!profileEmail) {
+            postList.innerHTML = '<p class="muted" style="text-align:center;">User not found.</p>';
+            return;
+        }
+
+        const headers = authToken ? { 'Authorization': authToken } : {};
+        
+        try {
+            const response = await fetch(`${API_BASE}/api/user/${profileEmail}`, { headers });
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.message);
             }
 
-            if (authToken) {
-                const commentForm = document.createElement('form');
-                commentForm.className = 'comment-form';
-                commentForm.innerHTML = `
-                    <textarea placeholder="Write a comment..." required></textarea>
-                    <button type="submit">Post</button>
-                `;
-                container.querySelector('.comments-section').appendChild(commentForm);
+            const profile = data.profile;
+            const posts = data.posts;
+            const isMyProfile = profileEmail === userEmail;
 
-                commentForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const commentText = commentForm.querySelector('textarea').value;
-                    if (!commentText.trim()) return;
-                    
+            const subscribeButtonHtml = !isMyProfile && authToken && !profile.isSubscribed
+                ? `<button class="pill primary subscribe-btn" data-email="${profile.email}">+ Subscribe</button>`
+                : isMyProfile
+                    ? ''
+                    : profile.isSubscribed
+                        ? `<span class="pill">Subscribed</span>`
+                        : '';
+                        
+            profileHeader.innerHTML = `
+                <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+                    <div class="avatar" style="width:60px;height:60px;font-size:24px;">${profile.name.charAt(0).toUpperCase()}</div>
+                    <div>
+                        <h1 style="margin:0;">${profile.name}'s Station</h1>
+                        <p style="margin:0;color:var(--muted);">${posts.length} posts</p>
+                    </div>
+                    ${subscribeButtonHtml}
+                </div>
+            `;
+            
+            const subscribeBtn = profileHeader.querySelector('.subscribe-btn');
+            if(subscribeBtn) {
+                subscribeBtn.addEventListener('click', async () => {
+                    subscribeBtn.textContent = 'Subscribing...';
                     try {
-                        const res = await fetch(`${API_BASE}/api/audio/${post.id}/comment`, {
+                        const res = await fetch(`${API_BASE}/api/subscribe/${profile.email}`, {
                             method: 'POST',
-                            headers: { 
-                                'Content-Type': 'application/json',
-                                'Authorization': authToken
-                            },
-                            body: JSON.stringify({ commentText })
+                            headers: { 'Authorization': authToken }
                         });
                         const data = await res.json();
                         if (data.success) {
-                            commentForm.querySelector('textarea').value = '';
-                            const newCommentItem = document.createElement('div');
-                            newCommentItem.className = 'comment-item';
-                            newCommentItem.innerHTML = `
-                                <div class="comment-avatar">${userName.charAt(0).toUpperCase()}</div>
-                                <div class="comment-body">
-                                    <div class="comment-author">${userName}</div>
-                                    <div class="comment-text">${commentText}</div>
-                                </div>
-                            `;
-                            const noCommentsParagraph = commentList.querySelector('p.muted');
-                            if (noCommentsParagraph) noCommentsParagraph.remove();
-                            commentList.appendChild(newCommentItem);
+                            subscribeBtn.textContent = 'Subscribed';
+                            subscribeBtn.disabled = true;
+                            subscribeBtn.classList.remove('primary');
+                        } else {
+                            subscribeBtn.textContent = data.message;
+                            console.error(data.message);
                         }
                     } catch (err) {
-                        console.error('Failed to post comment', err);
+                        console.error('Failed to subscribe', err);
+                        subscribeBtn.textContent = 'Error';
                     }
                 });
             }
 
-            return container;
-        }
-
-        async function loadProfile() {
-            if (!profileEmail) {
-                postList.innerHTML = '<p class="muted" style="text-align:center;">User not found.</p>';
-                return;
-            }
-
-            const headers = authToken ? { 'Authorization': authToken } : {};
-            
-            try {
-                const response = await fetch(`${API_BASE}/api/user/${profileEmail}`, { headers });
-                const data = await response.json();
-
-                if (!data.success) {
-                    throw new Error(data.message);
-                }
-
-                const profile = data.profile;
-                const posts = data.posts;
-                const isMyProfile = profileEmail === userEmail;
-
-                const subscribeButtonHtml = !isMyProfile && authToken && !profile.isSubscribed
-                    ? `<button class="pill primary subscribe-btn" data-email="${profile.email}">+ Subscribe</button>`
-                    : isMyProfile
-                        ? ''
-                        : profile.isSubscribed
-                            ? `<span class="pill">Subscribed</span>`
-                            : '';
-                            
-                profileHeader.innerHTML = `
-                    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-                        <div class="avatar" style="width:60px;height:60px;font-size:24px;">${profile.name.charAt(0).toUpperCase()}</div>
-                        <div>
-                            <h1 style="margin:0;">${profile.name}'s Station</h1>
-                            <p style="margin:0;color:var(--muted);">${posts.length} posts</p>
-                        </div>
-                        ${subscribeButtonHtml}
-                    </div>
-                `;
-                
-                const subscribeBtn = profileHeader.querySelector('.subscribe-btn');
-                if(subscribeBtn) {
-                    subscribeBtn.addEventListener('click', async () => {
-                        subscribeBtn.textContent = 'Subscribing...';
-                        try {
-                            const res = await fetch(`${API_BASE}/api/subscribe/${profile.email}`, {
-                                method: 'POST',
-                                headers: { 'Authorization': authToken }
-                            });
-                            const data = await res.json();
-                            if (data.success) {
-                                subscribeBtn.textContent = 'Subscribed';
-                                subscribeBtn.disabled = true;
-                                subscribeBtn.classList.remove('primary');
-                            } else {
-                                subscribeBtn.textContent = data.message;
-                                console.error(data.message);
-                            }
-                        } catch (err) {
-                            console.error('Failed to subscribe', err);
-                            subscribeBtn.textContent = 'Error';
-                        }
-                    });
-                }
-
-                if (posts.length > 0) {
-                    postList.innerHTML = '';
-                    posts.forEach(post => {
-                        postList.appendChild(createAudioPost(post));
-                    });
-                } else {
-                    postList.innerHTML = '<p class="muted" style="text-align:center;">This user has not posted any audio yet.</p>';
-                }
-            } catch (error) {
-                console.error('Failed to load profile:', error);
-                profileHeader.innerHTML = `<h1 style="color:var(--danger);">Error loading profile</h1><p class="muted">${error.message}</p>`;
-            }
-        }
-
-        function setupAuthControls() {
-            if (authToken) {
-                authControls.innerHTML = `
-                    <a href="profile.html?email=${userEmail}" class="avatar" title="${userEmail}">${userName.charAt(0).toUpperCase()}</a>
-                    <button class="pill" id="logout-btn">Log Out</button>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    localStorage.removeItem('authToken');
-                    localStorage.removeItem('userEmail');
-                    localStorage.removeItem('userName');
-                    window.location.href = 'index.html';
+            if (posts.length > 0) {
+                postList.innerHTML = '';
+                posts.forEach(post => {
+                    postList.appendChild(createAudioPost(post));
                 });
             } else {
-                authControls.innerHTML = `
-                    <a href="login.html" class="pill">Login</a>
-                    <a href="register.html" class="pill primary">Sign Up</a>
-                `;
+                postList.innerHTML = '<p class="muted" style="text-align:center;">This user has not posted any audio yet.</p>';
             }
+        } catch (error) {
+            console.error('Failed to load profile:', error);
+            profileHeader.innerHTML = `<h1 style="color:var(--danger);">Error loading profile</h1><p class="muted">${error.message}</p>`;
         }
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            setupAuthControls();
-            loadProfile();
-        });
-    </script>
+    function setupAuthControls() {
+        if (authToken) {
+            authControls.innerHTML = `
+                <a href="profile.html?email=${userEmail}" class="avatar" title="${userEmail}">${userName.charAt(0).toUpperCase()}</a>
+                <button class="pill" id="logout-btn">Log Out</button>
+            `;
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
+                window.location.href = 'index.html';
+            });
+        } else {
+            authControls.innerHTML = `
+                <a href="login.html" class="pill">Login</a>
+                <a href="register.html" class="pill primary">Sign Up</a>
+            `;
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        setupAuthControls();
+        loadProfile();
+    });
+</script>
+</body>
+</html>
 </body>
 </html>
