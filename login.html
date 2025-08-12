@@ -61,9 +61,9 @@
                 if (data.success) {
                     localStorage.setItem('authToken', data.token);
                     localStorage.setItem('userEmail', data.userEmail);
+                    localStorage.setItem('userName', data.userName); // NEW: Save user name
                     window.location.href = 'index.html';
                 } else if (!data.success && data.message === 'Please verify your email first.') {
-                    // Redirect to the verification pending page
                     window.location.href = `verify_pending.html?email=${encodeURIComponent(email)}`;
                 } else {
                     statusEl.textContent = data.message;
