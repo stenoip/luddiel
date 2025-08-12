@@ -72,18 +72,30 @@
         const authControls = document.getElementById('auth-controls');
         const authToken = localStorage.getItem('authToken');
         const userEmail = localStorage.getItem('userEmail');
+        const userName = localStorage.getItem('userName');
 
         function createAudioPost(post) {
             const container = document.createElement('div');
             container.className = 'audio-post';
+            
+            const isMyPost = userName === post.userName;
+            const subscribeButtonHtml = !isMyPost && authToken && !post.isSubscribed
+                ? `<button class="btn ghost subscribe-btn" data-email="${post.userEmail}">+ Subscribe</button>`
+                : isMyPost
+                    ? `<span class="btn ghost">Your Post</span>`
+                    : post.isSubscribed
+                        ? `<span class="btn ghost">Subscribed</span>`
+                        : '';
+
             container.innerHTML = `
-                <div class="meta">${post.sender} — ${new Date(post.timestamp).toLocaleString()}</div>
+                <div class="meta">${post.userName} — ${new Date(post.timestamp).toLocaleString()}</div>
                 <audio controls src="${API_BASE}${post.file}"></audio>
                 <div class="actions">
                     <button class="btn like-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12.016 2.378l.492.748c1.688 2.585 3.12 4.793 4.298 6.551 2.215 3.32 3.197 4.818 3.197 6.136 0 3.238-2.607 5.867-5.827 5.867-1.895 0-3.666-.884-4.88-2.316a.48.48 0 0 0-.742 0c-1.214 1.432-2.985 2.316-4.88 2.316-3.22 0-5.827-2.629-5.827-5.867 0-1.318.982-2.816 3.197-6.136 1.178-1.758 2.61-3.966 4.298-6.551l.492-.748c.55-.838.825-1.258 1.13-1.428.307-.17.653-.17.96 0 .307.17.582.59.13 1.428z" stroke="#e6e8ee" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         <span>Like (${post.likeCount})</span>
                     </button>
+                    ${subscribeButtonHtml}
                 </div>
                 <div class="stat">Played ${post.playCount} times</div>
                 
@@ -100,9 +112,9 @@
                     const commentItem = document.createElement('div');
                     commentItem.className = 'comment-item';
                     commentItem.innerHTML = `
-                        <div class="comment-avatar">${comment.userEmail.charAt(0).toUpperCase()}</div>
+                        <div class="comment-avatar">${comment.userName.charAt(0).toUpperCase()}</div>
                         <div class="comment-body">
-                            <div class="comment-author">${comment.userEmail}</div>
+                            <div class="comment-author">${comment.userName}</div>
                             <div class="comment-text">${comment.commentText}</div>
                         </div>
                     `;
@@ -149,6 +161,31 @@
                 });
             }
 
+            const subscribeBtn = container.querySelector('.subscribe-btn');
+            if(subscribeBtn) {
+                subscribeBtn.addEventListener('click', async () => {
+                    subscribeBtn.textContent = 'Subscribing...';
+                    try {
+                        const res = await fetch(`${API_BASE}/api/subscribe/${post.userEmail}`, {
+                            method: 'POST',
+                            headers: { 'Authorization': authToken }
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            subscribeBtn.textContent = 'Subscribed';
+                            subscribeBtn.disabled = true;
+                            subscribeBtn.classList.remove('ghost');
+                        } else {
+                            subscribeBtn.textContent = data.message;
+                            console.error(data.message);
+                        }
+                    } catch (err) {
+                        console.error('Failed to subscribe', err);
+                        subscribeBtn.textContent = 'Error';
+                    }
+                });
+            }
+
             // NEW: Add comment form
             if (authToken) {
                 const commentForm = document.createElement('form');
@@ -179,9 +216,9 @@
                             const newCommentItem = document.createElement('div');
                             newCommentItem.className = 'comment-item';
                             newCommentItem.innerHTML = `
-                                <div class="comment-avatar">${userEmail.charAt(0).toUpperCase()}</div>
+                                <div class="comment-avatar">${userName.charAt(0).toUpperCase()}</div>
                                 <div class="comment-body">
-                                    <div class="comment-author">${userEmail}</div>
+                                    <div class="comment-author">${userName}</div>
                                     <div class="comment-text">${commentText}</div>
                                 </div>
                             `;
@@ -224,9 +261,9 @@
                         creatorEl.className = 'creator';
                         creatorEl.innerHTML = `
                             <div class="left">
-                                <div class="mini">🎧</div>
+                                <div class="mini">${post.userName.charAt(0).toUpperCase()}</div>
                                 <div>
-                                    <div class="name">${post.sender}</div>
+                                    <div class="name">${post.userName}</div>
                                     <div class="muted" style="font-size:12px;">Likes: ${post.likeCount}</div>
                                 </div>
                             </div>
@@ -251,14 +288,14 @@
 
         function setupAuthControls() {
             if (authToken) {
-                const userEmail = localStorage.getItem('userEmail');
                 authControls.innerHTML = `
-                    <div class="avatar" title="${userEmail}">${userEmail.charAt(0).toUpperCase()}</div>
+                    <div class="avatar" title="${userEmail}">${userName.charAt(0).toUpperCase()}</div>
                     <button class="pill" id="logout-btn">Log Out</button>
                 `;
                 document.getElementById('logout-btn').addEventListener('click', () => {
                     localStorage.removeItem('authToken');
                     localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userName');
                     window.location.reload();
                 });
             } else {
