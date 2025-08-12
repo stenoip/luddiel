@@ -88,7 +88,10 @@
                         : '';
 
             container.innerHTML = `
-                <div class="meta">${post.userName} — ${new Date(post.timestamp).toLocaleString()}</div>
+                <div class="meta">
+                    <a href="profile.html?email=${post.userEmail}" style="font-weight: bold;">${post.userName}</a>
+                    — ${new Date(post.timestamp).toLocaleString()}
+                </div>
                 <audio controls src="${API_BASE}${post.file}"></audio>
                 <div class="actions">
                     <button class="btn like-btn">
@@ -105,7 +108,6 @@
                 </div>
             `;
             
-            // Populate existing comments
             const commentList = container.querySelector('.comment-list');
             if (post.comments && post.comments.length > 0) {
                 post.comments.forEach(comment => {
@@ -186,7 +188,6 @@
                 });
             }
 
-            // NEW: Add comment form
             if (authToken) {
                 const commentForm = document.createElement('form');
                 commentForm.className = 'comment-form';
@@ -261,9 +262,9 @@
                         creatorEl.className = 'creator';
                         creatorEl.innerHTML = `
                             <div class="left">
-                                <div class="mini">${post.userName.charAt(0).toUpperCase()}</div>
+                                <a href="profile.html?email=${post.userEmail}" class="mini">${post.userName.charAt(0).toUpperCase()}</a>
                                 <div>
-                                    <div class="name">${post.userName}</div>
+                                    <a href="profile.html?email=${post.userEmail}" class="name">${post.userName}</a>
                                     <div class="muted" style="font-size:12px;">Likes: ${post.likeCount}</div>
                                 </div>
                             </div>
@@ -289,7 +290,7 @@
         function setupAuthControls() {
             if (authToken) {
                 authControls.innerHTML = `
-                    <div class="avatar" title="${userEmail}">${userName.charAt(0).toUpperCase()}</div>
+                    <a href="profile.html?email=${userEmail}" class="avatar" title="${userEmail}">${userName.charAt(0).toUpperCase()}</a>
                     <button class="pill" id="logout-btn">Log Out</button>
                 `;
                 document.getElementById('logout-btn').addEventListener('click', () => {
