@@ -1,6 +1,16 @@
 import { sql } from '@vercel/postgres';
 
 export default async function handler(req, res) {
+  // --- CORS headers ---
+  res.setHeader("Access-Control-Allow-Origin", "https://stenoip.github.io");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+  // ---------------------
+
   try {
     const postsRes = await sql`
       select p.*, coalesce(l.cnt, 0)::int as likes_count
@@ -26,7 +36,9 @@ export default async function handler(req, res) {
     }
 
     const map = new Map(posts.map(p => [p.id, { ...p, comments: [] }]));
-    for (const c of comments) map.get(c.post_id)?.comments.push(c);
+    for (const c of comments) {
+      map.get(c.post_id)?.comments.push(c);
+    }
 
     res.status(200).json({ posts: Array.from(map.values()) });
   } catch (e) {
