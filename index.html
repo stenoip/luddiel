@@ -4,149 +4,666 @@
   <meta charset="utf-8" />
   <title>Lûddiele — share audio & videos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Dark theme base */
-    :root {
-      color-scheme: dark;
-      --bg: #1f1f1f;
-      --panel: #2a2a2a;
-      --muted: #a7a7a7;
-      --text: #eaeaea;
-      --accent: #7aa2ff;
-      --danger: #ff6565;
-      --border: #3b3b3b;
+*{
+    margin: 0;
+    padding: 0;
+    font-family:'poppins' , sans-serif;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color: #5a5a5a;
+}
+
+img{
+    cursor: pointer;
+}
+
+.flex-div{
+     display: flex;
+     align-items: center;
+
+}
+nav{
+    padding: 0px 2%;
+    justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+
+.nav-right img{
+    width: 25px;
+    margin-right: 25px;
+}
+
+.nav-right .user-icon{
+width: 35px;
+margin-right: 0px;
+border-radius: 50%;
+
+}
+
+.nav-left .menu-icon{
+    width: 22px;
+    margin-right: 25px;
+
+}
+
+.nav-left .logo{
+    width: 130px;
+
+}
+
+.nav-middle .mic-icon{
+    width: 16px;
+
+}
+.nav-middle .search-box{
+    border: 1px solid #ccc;
+    margin-right: 15px;
+    padding: 8px 12px;
+    /* border-radius: 25px; */
+}
+
+.nav-middle .search-box input{
+    width: 400px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+.nav-middle .search-box img{
+    width: 15px;
+   
+}
+
+/* sidebar */
+.sidebar{
+    background: #fff;
+    width: 15%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    padding-left: 2%;
+    padding-top: 98px;
+
+}
+
+.shortcut-links a img{
+width: 20px;
+margin-right: 20px;
+}
+
+.shortcut-links a{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: fit-content;
+    flex-wrap: wrap;
+    margin-top: 13px;
+}
+
+
+.shortcut-links a:first-child{
+    color: #ed3833;
+}
+
+.sidebar hr{
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    width: 85%;
+}
+.subscribed-list h3{
+    font-size: 13px;
+    margin: 20px 0;
+    color: #5a5a5a;
+}
+.subscribed-list a{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: fit-content;
+    flex-wrap: wrap;
+}
+.subscribed-list a img{
+    width: 25px;
+    border-radius: 50%;
+    margin-right: 28px;
+}
+
+
+.small-sidebar{
+    width: 5%;
+}
+.small-sidebar .shortcut-links a p  , .small-sidebar .subscribed-list a , .small-sidebar h3{
+    display: none;
+}
+
+.small-sidebar hr{
+    width: 50%;
+    margin-bottom: 25px;
+    display: none;
+
+}
+/* main Body */
+.container{
+   background: #f9f9f9;
+   padding-left: 17%;
+   padding-right: 2%;
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+.large-container{
+    padding-left: 7%; 
+}
+.banner{
+    width: 100%;
+    display: none;
+}
+
+.banner img{
+    width: 100%;
+    border-radius: 8px;
+}
+
+
+.list-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-column-gap: 16px;
+    grid-row-gap: 30px;
+    margin-top: 15px;
+}
+
+.vid-list .thumbnail{
+   width: 100%;
+   border-radius: 5px;
+
+}
+.vid-list .flex-div{
+    align-items: flex-start;
+    margin-top: 7px;
+}
+
+.vid-list .flex-div img{
+    width: 35px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.vid-info{
+    color: #5a5a5a;
+    font-size: 13px;
+
+}
+
+.vid-info a{
+    color: black;
+    font-weight: 600;
+    display: block;
+    margin: bottom 5px;;
+}
+
+
+@media (max-width: 900px) {
+    .menu-icon{
+        display: none;
     }
-    html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 16px; }
-    header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding: 12px 0; }
-    header h1 { margin: 0; font-size: 20px; letter-spacing: .3px; }
-    header small { color: var(--muted); }
-    a { color: var(--accent); text-decoration: none; }
-    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
-    .pad { padding: 14px; }
-    .row { display:flex; gap:14px; flex-wrap:wrap; }
-    .row > * { flex: 1 1 240px; min-width: 220px; }
-    label { font-size: 13px; color: var(--muted); display:block; margin-bottom:6px; }
-    input[type="text"], input[type="file"], textarea, button { background:#242424; color:var(--text); border:1px solid var(--border); border-radius:8px; padding:10px 12px; font:inherit; }
-    button { cursor:pointer; }
-    button.primary { background: var(--accent); color: #0e1427; border:0; }
-    button.ghost { background: transparent; }
-    .inline { display:flex; align-items:center; gap:8px; }
-    .spacer { height: 16px; }
-    .muted { color: var(--muted); }
-    .pill { padding: 3px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; color: var(--muted); }
-    .list { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:12px; }
-    .post { overflow:hidden; border-radius:8px; border:1px solid var(--border); background:#262626; }
-    .post .thumb { position:relative; aspect-ratio:16/9; background:#1a1a1a; display:grid; place-items:center; }
-    .post .body { padding: 10px; display:grid; gap: 8px; }
-    .actions { display:flex; gap:8px; align-items:center; }
-    .actions button { padding:6px 10px; font-size:14px; }
-    .img-responsive { width: 100%; }
 
-    /* Your CSS converted to valid CSS (kept functionally identical) */
-    .modal { background-color: rgba(0,0,0,0.4); position: fixed; inset: 0; display: none; align-items:center; justify-content:center; z-index: 999; }
-    .modal.open { display: flex; }
-    .modal-header { border-bottom: 1px solid #505050; padding: 12px 16px 6px 16px; display:flex; align-items:center; justify-content:space-between; }
-    .modal-header .modal-title { color: #ccc; margin: 0; }
-    .modal-header .close { font-size: 32px; opacity: 1.0; color: #ccc; text-shadow: none; outline: none; background: transparent; border: 0; cursor: pointer; }
-    .modal-content { border-radius: 0; border: 0; background-color: #323232; max-width: 920px; width: calc(100% - 24px); }
-    button.btn-play { position: absolute; top: 0; bottom: 0; padding: 0; margin: 0; margin-left: -15px; border: 0; border-radius: 0; outline: 0 !important; width: 100%; background-color: transparent; color: rgba(245, 245, 245, 0.8); display:grid; place-items:center; }
-    button.btn-play:hover, button.btn-play:active, button.btn-play:visited, button.btn-play:focus { color: rgba(255, 255, 255, 1.0); }
-    button.btn-play .glyphicon { padding: 0; margin: 0; color: inherit; background-color: inherit; font-size: 64px; }
-    @media (min-width: 992px) and (max-width: 1199px) { button.btn-play .glyphicon { font-size: 56px; } }
-    @media (min-width: 768px) and (max-width: 991px) { button.btn-play .glyphicon { font-size: 46px; } }
-    @media (max-width: 767px) { a.video { display:block; } button.btn-play .glyphicon { font-size: 56px; } }
+    .sidebar{
+        display: none;
+    } 
 
-    /* Modal body */
-    .modal-body { padding: 12px 16px 16px 16px; }
+   .container, .large-container{
+       padding-left: 5%;
+       padding-right: 5%;   
+   }
+
+   /* .nav-right img{
+  
+    display: none;
+   } */
+
+   .nav-right .user-icon{
+       display: block;
+       width: 30px;
+   }
+
+   .nav-middle .search-box {
+       width: 100px;
+       display: none;
+
+   }
+
+   .nav-middle .mic-icon{
+       display: none;
+   }
+
+   .logo{
+       width: 90px;
+   }
+
+}
+
+/*******      Video -9      *****/
+
+
+.play-container{
+    padding-left: 2% !important;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+.play-video{
+    flex-basis: 69%;
+}
+
+.right-sidebar{
+    flex-basis: 30%;
+}
+
+.play-video video{
+    width: 100%;
+}
+.side-video-list{
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.side-video-list img{
+    width: 100%;
+
+}
+.side-video-list .small-thumbnail{
+    flex-basis: 49%;
+
+}
+
+.side-video-list .vid-info{
+
+    flex-basis: 49%;
+}
+
+.play-video .tags a{
+   
+    color: #0000ff;
+    font-size: 13px;
+}
+
+.play-video h3{
+    font-weight: 600;
+    font-size: 22px;
+    margin-top: 12px;
+}
+
+.play-video .play-video-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #5a5a5a;
+}
+
+.play-video .play-video-info a img{
+    width: 20px;
+    margin-right: 8px;
+
+}
+
+.play-video .play-video-info a{
+    display: inline-flex;
+    align-items: center;
+    margin-left: 15px;
+
+}
+
+.play-video hr{
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 10px 0;
+}
+
+.owner{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.owner div{
+    flex: 1;
+    line-height: 18px;   
+}
+
+.owner img{
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.owner p{
+    color: #000;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+.owner span{
+    font-size: 13px;
+    color: #5a5a5a;
+}
+
+
+.owner button{
+    background: #ed3833;
+    color: #fff;
+    padding: 8px 30px;
+    border: 0;
+    outline: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.vid-des{
+    padding-left: 55px;
+    margin: 15px 0;
+}
+
+.vid-des p{
+    
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #5a5a5a;
+}
+
+.vid-des .cmnt{
+    display: flex;
+    margin-top: 15px;
+}
+.cmnt img{
+    width: 24px;
+    height: 17px;
+    margin-left: 46px;
+    margin-right: 14px;
+}
+
+.vid-des h4{
+    font-size: 14px;
+    color: #5a5a5a;
+    /* margin-top: 15px; */
+}
+
+.add-cmnt{
+    display: flex;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.add-cmnt img{
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.add-cmnt input{
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #5a5a5a;
+    width: 100%;
+    padding-top: 10px;
+    background: transparent;
+}
+
+.old-cmnt{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.old-cmnt img{
+    width: 35px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.old-cmnt h3{
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.old-cmnt h3 span{
+    font-size: 12px;
+    color: #5a5a5a;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.old-cmnt .cmnt-react{
+    display: flex;
+    align-items: center;
+    margin:8px 0;
+    font-size: 14px;
+}
+
+.old-cmnt .cmnt-react img{
+
+    width: 20px;
+    border-radius: 0;
+    margin-right: 5px;
+}
+
+.old-cmnt .cmnt-react span{
+    margin-right: 20px;
+    color: #5a5a5a;
+
+}
+
+.old-cmnt .cmnt-react div{
+    color: blue;
+    display: block;
+}
+.hide-hr{
+    display: none;
+}
+@media (max-width: 900px){
+
+    .play-video{
+        flex-basis: 100%;
+    }
+
+
+    .right-sidebar{
+        flex-basis: 100%;
+        margin-top: 35px;
+    }
+
+    .play-container{
+        padding-left: 5%;
+    }
+
+    .vid-des {
+        padding-left: 5px;
+    }
+ 
+    .play-video .play-video-info a{
+        margin-left: 0;
+        margin-right: 15px;
+        margin-top: 15px;
+    }
+    
+    .hide-hr{
+        display: block;
+    }
+
+}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>Lûddiele</h1>
-        <small class="muted">“Loo-dee-eh-luh” — share sound and motion</small>
-      </div>
-      <div class="inline">
-        <span class="pill" id="session-pill">guest</span>
-        <button class="ghost" id="signin-btn">Set display name</button>
-      </div>
-    </header>
 
-    <div class="card pad">
-      <div class="row">
-        <div>
-          <label for="displayName">Display name</label>
-          <input id="displayName" type="text" placeholder="FryskFan" />
-        </div>
-        <div>
-          <label for="caption">Caption</label>
-          <input id="caption" type="text" placeholder="A morning soundwalk in Brooklyn" />
-        </div>
-        <div>
-          <label for="file">Media file (mp4/webm/mov/mp3/wav)</label>
-          <input id="file" type="file" accept="video/*,audio/*" />
-        </div>
-      </div>
-      <div class="spacer"></div>
-      <div class="inline">
-        <button class="primary" id="uploadBtn">Upload & post</button>
-        <span id="uploadStatus" class="muted"></span>
-      </div>
+  <!-- Top nav -->
+  <nav class="flex-div">
+    <div class="nav-left flex-div">
+      
+      <img src="https://stenoip.github.io/luddiele/luddiel_logo.png" class="logo" alt="Lûddiele">
     </div>
-
-    <div class="spacer"></div>
-
-    <div class="card pad">
-      <div class="inline" style="justify-content: space-between;">
-        <h3 style="margin: 0;">Feed</h3>
-        <button id="refreshBtn" class="ghost">Refresh</button>
+    <div class="nav-middle flex-div">
+      <div class="search-box flex-div">
+        <input id="searchInput" type="text" placeholder="Search Lûddiele…">
+        <img src="https://svgshare.com/i/14S8.svg" alt="Search">
       </div>
-      <div class="spacer"></div>
-      <div id="feed" class="list"></div>
+      <img src="https://svgshare.com/i/14RY.svg" class="mic-icon" alt="Mic">
     </div>
+    <div class="nav-right flex-div">
+      <img src="https://svgshare.com/i/14QZ.svg" alt="Upload" id="openUpload">
+      <img src="https://svgshare.com/i/14RA.svg" alt="Notifications">
+      <img src="https://api.dicebear.com/8.x/initials/svg?seed=L" class="user-icon" id="userIcon" alt="User">
+    </div>
+  </nav>
 
-    <div class="spacer"></div>
-    <div class="muted" style="text-align:center; font-size:12px;">© Stenoip Company</div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="shortcut-links">
+      <a href="#"><img src="https://svgshare.com/i/14Sm.svg" alt=""><p>Home</p></a>
+      <a href="#"><img src="https://svgshare.com/i/14Si.svg" alt=""><p>Explore</p></a>
+      <a href="#"><img src="https://svgshare.com/i/14Sn.svg" alt=""><p>Audio</p></a>
+      <a href="#"><img src="https://svgshare.com/i/14Sd.svg" alt=""><p>Video</p></a>
+    </div>
+    <hr>
+    <div class="subscribed-list">
+      <h3>Creators</h3>
+      <a href="#"><img src="https://api.dicebear.com/8.x/initials/svg?seed=A" alt=""><p>Ally</p></a>
+      <a href="#"><img src="https://api.dicebear.com/8.x/initials/svg?seed=F" alt=""><p>FryskFan</p></a>
+    </div>
   </div>
 
-  <!-- Modal viewer -->
-  <div class="modal" id="viewer">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" id="viewerTitle">Playing…</div>
-        <button class="close" id="closeViewer" aria-label="Close viewer">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div id="viewerMedia" class="img-responsive"></div>
+  <!-- Main container -->
+  <div class="container">
+    <!-- Upload bar -->
+    <div class="flex-div" style="gap:12px; background:#fff; padding:12px; border:1px solid #eee; border-radius:8px;">
+      <input id="displayName" type="text" placeholder="Your display name" style="padding:8px 12px; border:1px solid #ccc; border-radius:6px;">
+      <input id="caption" type="text" placeholder="Caption (e.g., A morning soundwalk in Brooklyn)" style="padding:8px 12px; border:1px solid #ccc; border-radius:6px; flex:1;">
+      <input id="file" type="file" accept="video/*,audio/*" style="padding:8px; border:1px solid #ccc; border-radius:6px;">
+      <button id="uploadBtn" style="background:#ed3833; color:#fff; border:0; border-radius:6px; padding:10px 14px; cursor:pointer;">Upload & Post</button>
+      <span id="uploadStatus" style="color:#5a5a5a; font-size:12px;"></span>
+    </div>
+
+    <!-- Feed grid -->
+    <div class="list-container" id="feed"></div>
+
+    <!-- Play view -->
+    <div class="play-container" id="playView" style="display:none;">
+      <div class="row">
+        <div class="play-video" id="playVideoPane">
+          <video id="playVideo" controls></video>
+          <audio id="playAudio" controls style="width:100%; display:none;"></audio>
+
+          <div class="tags" id="playTags">
+            <a href="#">#Lûddiele</a> <a href="#">#Share</a>
+          </div>
+
+          <h3 id="playTitle">(no caption)</h3>
+
+          <div class="play-video-info">
+            <div id="playMeta">author • time</div>
+            <div class="flex-div">
+              <a href="#" id="likeAction"><img src="https://svgshare.com/i/14QZ.svg" alt="">Like</a>
+              <a href="#" id="closePlay"><img src="https://svgshare.com/i/14QY.svg" alt="">Close</a>
+            </div>
+          </div>
+
+          <hr class="hide-hr">
+
+          <div class="owner">
+            <img id="ownerAvatar" src="" alt="">
+            <div>
+              <p id="ownerName">guest</p>
+              <span>Creator</span>
+            </div>
+            <button disabled>Follow</button>
+          </div>
+
+          <div class="vid-des">
+            <p id="playDesc">No description provided.</p>
+            <h4>Comments</h4>
+
+            <div class="add-cmnt">
+              <img id="meAvatar" src="" alt="">
+              <input id="commentInput" type="text" placeholder="Add a comment…">
+            </div>
+
+            <div id="comments"></div>
+          </div>
+        </div>
+
+        <div class="right-sidebar">
+          <h4 style="color:#5a5a5a;">More from Lûddiele</h4>
+          <div id="sideList"></div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Set this to your deployed Vercel URL (no trailing slash)
+    // Configure your deployed API base
     const API_BASE = 'https://YOUR-VERCEL-APP.vercel.app';
 
-    // Very light "auth": persistent session id + display name
+    // Basic session
     const session = {
       id: localStorage.getItem('lud_sess_id') || crypto.randomUUID(),
       name: localStorage.getItem('lud_name') || 'guest'
     };
     localStorage.setItem('lud_sess_id', session.id);
     document.getElementById('displayName').value = session.name;
-    document.getElementById('session-pill').textContent = session.name;
 
-    document.getElementById('signin-btn').addEventListener('click', () => {
+    // UI hooks
+    const feedEl = document.getElementById('feed');
+    const playView = document.getElementById('playView');
+    const playVideo = document.getElementById('playVideo');
+    const playAudio = document.getElementById('playAudio');
+    const playTitle = document.getElementById('playTitle');
+    const playMeta = document.getElementById('playMeta');
+    const ownerAvatar = document.getElementById('ownerAvatar');
+    const ownerName = document.getElementById('ownerName');
+    const playDesc = document.getElementById('playDesc');
+    const commentsEl = document.getElementById('comments');
+    const sideList = document.getElementById('sideList');
+    const likeAction = document.getElementById('likeAction');
+    const meAvatar = document.getElementById('meAvatar');
+    const searchInput = document.getElementById('searchInput');
+
+    // Avatars
+    const avatarFor = (name) => `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name||'guest')}`;
+    meAvatar.src = avatarFor(session.name);
+    document.getElementById('userIcon').addEventListener('click', () => {
       const name = prompt('Choose a display name:')?.trim();
       if (!name) return;
       session.name = name.slice(0, 64);
       localStorage.setItem('lud_name', session.name);
       document.getElementById('displayName').value = session.name;
-      document.getElementById('session-pill').textContent = session.name;
+      meAvatar.src = avatarFor(session.name);
     });
 
-    // Upload & create post
+    // Sidebar toggle
+    document.querySelector('.menu-icon')?.addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('small-sidebar');
+    });
+
+    // Upload flow
     document.getElementById('uploadBtn').addEventListener('click', async () => {
       const status = document.getElementById('uploadStatus');
       status.textContent = '';
@@ -154,9 +671,8 @@
         const fileEl = document.getElementById('file');
         if (!fileEl.files.length) return alert('Pick a media file first.');
         const file = fileEl.files[0];
-
+        const author = (document.getElementById('displayName').value.trim() || 'guest').slice(0,64);
         const caption = document.getElementById('caption').value.trim();
-        const author = document.getElementById('displayName').value.trim() || 'guest';
 
         status.textContent = 'Requesting upload URL…';
         const upRes = await fetch(API_BASE + '/api/create-upload-url', {
@@ -194,134 +710,201 @@
         setTimeout(() => status.textContent = '', 1200);
       } catch (e) {
         console.error(e);
-        document.getElementById('uploadStatus').textContent = 'Error: ' + e.message;
+        status.textContent = 'Error: ' + e.message;
       }
     });
 
-    // Feed rendering
-    const feedEl = document.getElementById('feed');
-    document.getElementById('refreshBtn').addEventListener('click', loadFeed);
-
-    async function loadFeed() {
-      feedEl.innerHTML = '<div class="muted">Loading…</div>';
+    // Feed loading + render
+    let currentPost = null;
+    async function loadFeed(query='') {
+      feedEl.innerHTML = '<div style="color:#5a5a5a;">Loading…</div>';
       const res = await fetch(API_BASE + '/api/feed');
       const data = await res.json();
+      const posts = data.posts.filter(p => (p.caption||'').toLowerCase().includes(query.toLowerCase()) || (p.author||'').toLowerCase().includes(query.toLowerCase()));
       feedEl.innerHTML = '';
-      data.posts.forEach(renderPost);
+      posts.forEach(p => feedEl.appendChild(renderCard(p)));
+      // side list
+      sideList.innerHTML = '';
+      posts.slice(0,6).forEach(p => sideList.appendChild(renderSideItem(p)));
     }
 
-    function renderPost(p) {
-      const card = document.createElement('div');
-      card.className = 'post';
-
+    function renderCard(p) {
+      const item = document.createElement('div');
+      item.className = 'vid-list';
+      // media thumbnail
       const thumb = document.createElement('div');
-      thumb.className = 'thumb';
+      const isAudio = (p.media_type||'').startsWith('audio/');
+      if (isAudio) {
+        const tile = document.createElement('div');
+        tile.className = 'thumbnail';
+        tile.style.height = '140px';
+        tile.style.background = '#eee';
+        tile.style.display = 'flex';
+        tile.style.alignItems = 'center';
+        tile.style.justifyContent = 'center';
+        tile.textContent = 'Audio ▶';
+        tile.style.fontWeight = '600';
+        tile.style.color = '#333';
+        tile.addEventListener('click', () => openPlay(p));
+        thumb.appendChild(tile);
+      } else {
+        const video = document.createElement('video');
+        video.className = 'thumbnail';
+        video.src = p.media_url;
+        video.muted = true;
+        video.preload = 'metadata';
+        video.addEventListener('mouseenter', () => video.play().catch(()=>{}));
+        video.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+        video.addEventListener('click', () => openPlay(p));
+        thumb.appendChild(video);
+      }
+      item.appendChild(thumb);
 
-      const play = document.createElement('button');
-      play.className = 'btn-play';
-      const icon = document.createElement('span');
-      icon.className = 'glyphicon';
-      icon.textContent = '▶';
-      play.appendChild(icon);
-      play.addEventListener('click', () => openViewer(p));
+      // info row
+      const infoRow = document.createElement('div');
+      infoRow.className = 'flex-div';
+      const avatar = document.createElement('img');
+      avatar.src = avatarFor(p.author);
+      const info = document.createElement('div');
+      info.className = 'vid-info';
+      info.innerHTML = `
+        <a href="#">${escapeHtml(p.caption || '(no caption)')}</a>
+        <p>${escapeHtml(p.author)} • ${new Date(p.created_at).toLocaleString()}</p>
+        <p> ${p.likes_count}</p>
+      `;
+      infoRow.appendChild(avatar);
+      infoRow.appendChild(info);
+      item.appendChild(infoRow);
+      return item;
+    }
 
-      thumb.appendChild(play);
+    function renderSideItem(p) {
+      const row = document.createElement('div');
+      row.className = 'side-video-list';
+      const left = document.createElement('div');
+      left.className = 'small-thumbnail';
+      const isAudio = (p.media_type||'').startsWith('audio/');
+      if (isAudio) {
+        const tile = document.createElement('div');
+        tile.style.height = '70px';
+        tile.style.background = '#eee';
+        tile.style.display = 'flex';
+        tile.style.alignItems = 'center';
+        tile.style.justifyContent = 'center';
+        tile.style.borderRadius = '6px';
+        tile.textContent = 'Audio ▶';
+        tile.style.fontSize = '12px';
+        tile.addEventListener('click', () => openPlay(p));
+        left.appendChild(tile);
+      } else {
+        const video = document.createElement('video');
+        video.src = p.media_url;
+        video.muted = true;
+        video.preload = 'metadata';
+        video.style.borderRadius = '6px';
+        video.addEventListener('click', () => openPlay(p));
+        left.appendChild(video);
+      }
+      const right = document.createElement('div');
+      right.className = 'vid-info';
+      right.innerHTML = `
+        <a href="#">${escapeHtml(p.caption || '(no caption)')}</a>
+        <p>${escapeHtml(p.author)}</p>
+      `;
+      row.appendChild(left);
+      row.appendChild(right);
+      return row;
+    }
 
-      const body = document.createElement('div');
-      body.className = 'body';
-
-      const title = document.createElement('div');
-      title.textContent = p.caption || '(no caption)';
-
-      const meta = document.createElement('div');
-      meta.className = 'muted';
-      meta.textContent = `${p.author} • ${new Date(p.created_at).toLocaleString()}`;
-
-      const actions = document.createElement('div');
-      actions.className = 'actions';
-
-      const likeBtn = document.createElement('button');
-      likeBtn.className = 'ghost';
-      likeBtn.textContent = `❤ ${p.likes_count}`;
-      likeBtn.addEventListener('click', async () => {
+    function openPlay(p) {
+      currentPost = p;
+      document.querySelector('.container').classList.add('large-container');
+      playView.style.display = 'block';
+      // media
+      const isAudio = (p.media_type||'').startsWith('audio/');
+      if (isAudio) {
+        playVideo.style.display = 'none';
+        playVideo.pause();
+        playAudio.style.display = 'block';
+        playAudio.src = p.media_url;
+      } else {
+        playAudio.style.display = 'none';
+        playAudio.pause();
+        playVideo.style.display = 'block';
+        playVideo.src = p.media_url;
+      }
+      // meta
+      playTitle.textContent = p.caption || '(no caption)';
+      playMeta.textContent = `${p.author} • ${new Date(p.created_at).toLocaleString()}`;
+      ownerAvatar.src = avatarFor(p.author);
+      ownerName.textContent = p.author;
+      playDesc.textContent = p.caption || '';
+      // like button
+      likeAction.onclick = async (e) => {
+        e.preventDefault();
         await fetch(API_BASE + '/api/like', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ postId: p.id, sessionId: session.id })
         });
-        await loadFeed();
+        await loadFeed(searchInput.value);
+        const fresh = (await (await fetch(API_BASE + '/api/feed')).json()).posts.find(x => x.id === p.id);
+        if (fresh) currentPost = fresh;
+      };
+      // comments
+      commentsEl.innerHTML = '';
+      (p.comments || []).forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'old-cmnt';
+        item.innerHTML = `
+          <img src="${avatarFor(c.author)}" alt="">
+          <div>
+            <h3>${escapeHtml(c.author)} <span>${new Date(c.created_at).toLocaleString()}</span></h3>
+            <p>${escapeHtml(c.text)}</p>
+            <div class="cmnt-react">
+              <img src="https://svgshare.com/i/14QZ.svg" alt=""><span>Like</span>
+              <img src="https://svgshare.com/i/14QY.svg" alt=""><span>Reply</span>
+            </div>
+          </div>
+        `;
+        commentsEl.appendChild(item);
       });
+    }
 
-      const commentInput = document.createElement('input');
-      commentInput.placeholder = 'Write a comment…';
-      commentInput.style.flex = '1';
+    document.getElementById('closePlay').addEventListener('click', (e) => {
+      e.preventDefault();
+      playView.style.display = 'none';
+      playVideo.pause(); playAudio.pause();
+      document.querySelector('.container').classList.remove('large-container');
+      currentPost = null;
+    });
 
-      const commentBtn = document.createElement('button');
-      commentBtn.textContent = 'Comment';
-      commentBtn.className = 'ghost';
-      commentBtn.addEventListener('click', async () => {
-        const text = commentInput.value.trim();
+    // Add comment
+    document.getElementById('commentInput').addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter' && currentPost) {
+        const text = e.target.value.trim();
         if (!text) return;
         await fetch(API_BASE + '/api/comment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ postId: p.id, author: session.name, text })
+          body: JSON.stringify({ postId: currentPost.id, author: session.name, text })
         });
-        commentInput.value = '';
-        await loadFeed();
-      });
-
-      const comments = document.createElement('div');
-      comments.className = 'muted';
-      comments.style.fontSize = '13px';
-      comments.innerHTML = (p.comments || []).map(c => {
-        const when = new Date(c.created_at).toLocaleString();
-        return `<div><strong>${c.author}</strong>: ${c.text} <span class="muted">• ${when}</span></div>`;
-      }).join('');
-
-      actions.appendChild(likeBtn);
-      actions.appendChild(commentInput);
-      actions.appendChild(commentBtn);
-
-      body.appendChild(title);
-      body.appendChild(meta);
-      body.appendChild(actions);
-      body.appendChild(comments);
-
-      card.appendChild(thumb);
-      card.appendChild(body);
-      feedEl.appendChild(card);
-    }
-
-    // Modal viewer
-    const viewer = document.getElementById('viewer');
-    const viewerTitle = document.getElementById('viewerTitle');
-    const viewerMedia = document.getElementById('viewerMedia');
-    document.getElementById('closeViewer').addEventListener('click', closeViewer);
-    viewer.addEventListener('click', (e) => { if (e.target === viewer) closeViewer(); });
-
-    function openViewer(post) {
-      viewerTitle.textContent = post.caption || '(no caption)';
-      viewerMedia.innerHTML = '';
-      const isAudio = (post.media_type || '').startsWith('audio/');
-      if (isAudio) {
-        const audio = document.createElement('audio');
-        audio.controls = true;
-        audio.src = post.media_url;
-        audio.style.width = '100%';
-        viewerMedia.appendChild(audio);
-      } else {
-        const video = document.createElement('video');
-        video.controls = true;
-        video.src = post.media_url;
-        video.style.width = '100%';
-        viewerMedia.appendChild(video);
+        e.target.value = '';
+        await loadFeed(searchInput.value);
+        const fresh = (await (await fetch(API_BASE + '/api/feed')).json()).posts.find(x => x.id === currentPost.id);
+        if (fresh) openPlay(fresh);
       }
-      viewer.classList.add('open');
-    }
-    function closeViewer() {
-      viewer.classList.remove('open');
-      viewerMedia.innerHTML = '';
+    });
+
+    // Search
+    searchInput.addEventListener('input', () => loadFeed(searchInput.value));
+
+    // Upload icon opens file chooser
+    document.getElementById('openUpload').addEventListener('click', () => document.getElementById('file').click());
+
+    // Helpers
+    function escapeHtml(str) {
+      return (str||'').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
     }
 
     // Initial load
