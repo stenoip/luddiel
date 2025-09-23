@@ -1,10 +1,13 @@
 {
-  "name": "lud-backend",
+  "name": "luddiele-backend",
   "version": "1.0.0",
-  "private": true,
-  "type": "module",
+  "description": "Vercel serverless backend for Luddiele",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js"
+  },
   "dependencies": {
-    "@vercel/postgres": "latest",
-    "@vercel/blob": "latest"
+    "@vercel/blob": "^6.0.0",
+    "@vercel/kv": "^2.0.0"
   }
 }
