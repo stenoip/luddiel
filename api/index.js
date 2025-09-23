@@ -22,17 +22,22 @@ const hasRequiredFields = (body, fields) => {
 export default async function handler(req, res) {
   const { pathname } = new URL(req.url);
 
-  // Set CORS headers for local development and GitHub Pages
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Set CORS headers BEFORE any other logic.
+  // This is crucial for handling preflight OPTIONS requests.
+  res.setHeader("Access-Control-Allow-Origin", "https://stenoip.github.io");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Handle preflight CORS requests
+  // Handle preflight CORS requests separately
   if (req.method === "OPTIONS") {
+    // Return a 204 No Content response to signal success to the browser
     return res.status(204).end();
   }
 
-  // API route handling based on the path
+  //
+  // All other API route handling below this point
+  //
+
   switch (pathname) {
     //
     // /api/create-upload-url: Generates a signed URL for direct client-side upload to Vercel Blob
@@ -85,10 +90,9 @@ export default async function handler(req, res) {
           comments: [],
         };
 
-        // Use ZRANGE for a sorted list of posts by creation time
         await kv.zadd("posts", {
           score: Date.now(),
-          member: newPost,
+          member: JSON.stringify(newPost), // Store as string to avoid schema issues
         });
 
         jsonResponse(res, { success: true, postId });
@@ -106,10 +110,9 @@ export default async function handler(req, res) {
         return res.status(405).send("Method Not Allowed");
       }
       try {
-        // Fetch all posts from Vercel KV, sorted by creation time
         const posts = await kv.zrange("posts", 0, -1, { withScores: false, rev: true });
         const parsedPosts = posts.map(post => JSON.parse(post));
-
+        
         jsonResponse(res, { posts: parsedPosts });
       } catch (error) {
         console.error("Error fetching feed:", error);
@@ -125,11 +128,11 @@ export default async function handler(req, res) {
         return res.status(405).send("Method Not Allowed");
       }
       try {
-        const { postId, sessionId } = req.body;
-        if (!hasRequiredFields(req.body, ["postId", "sessionId"])) {
-          return jsonResponse(res, { error: "Missing postId or sessionId" }, 400);
+        const { postId } = req.body;
+        if (!postId) {
+          return jsonResponse(res, { error: "Missing postId" }, 400);
         }
-
+        
         const posts = await kv.zrange("posts", 0, -1, { withScores: false });
         const postData = posts.find(p => JSON.parse(p).id === postId);
 
@@ -140,11 +143,10 @@ export default async function handler(req, res) {
         const post = JSON.parse(postData);
         post.likes_count = (post.likes_count || 0) + 1;
         
-        // Remove old post and add updated one
         await kv.zrem("posts", postData);
         await kv.zadd("posts", {
           score: new Date(post.created_at).getTime(),
-          member: post,
+          member: JSON.stringify(post),
         });
 
         jsonResponse(res, { success: true });
@@ -164,7 +166,7 @@ export default async function handler(req, res) {
       try {
         const { postId, author, text } = req.body;
         if (!hasRequiredFields(req.body, ["postId", "author", "text"])) {
-          return jsonResponse(res, { error: "Missing postId, author, or text" }, 400);
+          return jsonResponse(res, { error: "Missing required fields" }, 400);
         }
 
         const posts = await kv.zrange("posts", 0, -1, { withScores: false });
@@ -184,11 +186,10 @@ export default async function handler(req, res) {
           created_at: new Date().toISOString(),
         });
         
-        // Remove old post and add updated one
         await kv.zrem("posts", postData);
         await kv.zadd("posts", {
           score: new Date(post.created_at).getTime(),
-          member: post,
+          member: JSON.stringify(post),
         });
 
         jsonResponse(res, { success: true });
